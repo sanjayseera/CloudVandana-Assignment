@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Survey Form</title>
+    <style>
+        /* CSS to center the form */
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+    </style>
+</head>
+<body>
+
+
+
+<form id="surveyForm" onsubmit="return false;">
+    <h1>Customer Survey Form</h1>
+    <label for="firstName">First Name:</label>
+    <input type="text" id="firstName" required><br><br>
+
+    <label for="lastName">Last Name:</label>
+    <input type="text" id="lastName" required><br><br>
+
+    <label for="dob">Date of Birth:</label>
+    <input type="date" id="dob" required><br><br>
+
+    <label for="country">Country:</label>
+    <select id="country" required>
+        <option value="India">India</option>
+        <option value="USA">USA</option>
+        <option value="Canada">Canada</option>
+        <option value="UK">UK</option>
+        <!-- Add more countries as needed -->
+    </select><br><br>
+
+    <label>Gender:</label><br>
+    <input type="checkbox" id="male"> <label for="male">Male</label>
+    <input type="checkbox" id="female"> <label for="female">Female</label>
+    <input type="checkbox" id="other"> <label for="other">Other</label><br><br>
+
+    <label for="profession">Profession:</label>
+    <input type="text" id="profession" required><br><br>
+
+    <label for="email">Email:</label>
+    <input type="email" id="email" required><br><br>
+
+    <label for="mobile">Mobile Number:</label>
+    <input type="tel" id="mobile" required><br><br>
+
+    <button type="button" onclick="resetForm()">Reset</button>
+    <button type="button" onclick="submitForm()">Submit</button>
+</form>
+
+<div id="popup" style="display: none;">
+    <h2>Survey Form Submission</h2>
+    <p id="popupContent"></p>
+    <button onclick="closePopup()">Close</button>
+</div>
+
+<script>
+function resetForm() {
+    document.getElementById("surveyForm").reset();
+}
+
+function submitForm() {
+    // Get input values
+    const firstName = document.getElementById("firstName").value;
+    const lastName = document.getElementById("lastName").value;
+    const dob = document.getElementById("dob").value;
+    const country = document.getElementById("country").value;
+    const gender = document.querySelectorAll('input[type="checkbox"]:checked');
+    const profession = document.getElementById("profession").value;
+    const email = document.getElementById("email").value;
+    const mobile = document.getElementById("mobile").value;
+
+    // Validate the form (you can add more validations as needed)
+    if (gender.length === 0) {
+        alert("Please select at least one gender.");
+        return;
+    }
+
+    // Display the values in a popup
+    const popupContent = `
+        First Name: ${firstName}<br>
+        Last Name: ${lastName}<br>
+        Date of Birth: ${dob}<br>
+        Country: ${country}<br>
+        Gender: ${[...gender].map(item => item.labels[0].innerText).join(", ")}<br>
+        Profession: ${profession}<br>
+        Email: ${email}<br>
+        Mobile Number: ${mobile}
+    `;
+
+    document.getElementById("popupContent").innerHTML = popupContent;
+    document.getElementById("popup").style.display = "block";
+}
+
+function closePopup() {
+    document.getElementById("popup").style.display = "none";
+    document.getElementById("surveyForm").reset();
+}
+</script>
+
+</body>
+</html>
+
